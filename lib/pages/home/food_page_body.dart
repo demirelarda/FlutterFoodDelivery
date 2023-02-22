@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/widgets/app_column.dart';
 import 'package:food_delivery/widgets/small_text.dart';
+import 'package:get/get.dart';
 
+import '../../controllers/popular_product_controller.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/icon_and_text_widget.dart';
+import 'package:get/get.dart';
 
 
 class FoodPageBody extends StatefulWidget {
@@ -45,27 +48,31 @@ class _FoodPageBodyState extends State<FoodPageBody> {
     return Column(
       children: [
         //slider section
-        Container(
-          height: Dimensions.pageView,
-          child: PageView.builder(
-              controller: pageController,
-              itemCount: 5,
-              itemBuilder: (context, position) {
-                return _buildPageItem(position);
-              }),
-        ),
+        GetBuilder<PopularProductController>(builder: (popularProducts){
+          return Container(
+            height: Dimensions.pageView,
+            child: PageView.builder(
+                controller: pageController,
+                itemCount: popularProducts.popularProductList.length,
+                itemBuilder: (context, position) {
+                  return _buildPageItem(position, popularProducts.popularProductList[position]);
+                }),
+          );
+        }),
         //dots
-        new DotsIndicator(
-          dotsCount: 5,
-          position: _currPageValue,
-          decorator: DotsDecorator(
-            activeColor: AppColors.mainColor,
-            size: const Size.square(9.0),
-            activeSize: const Size(18.0, 9.0),
-            activeShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
-          ),
-        ),
+        GetBuilder<PopularProductController>(builder: (popularProducts){
+          return DotsIndicator(
+            dotsCount: popularProducts.popularProductList.isEmpty?1:popularProducts.popularProductList.length, //if the data hasn't downloaded yet, there will be 1 dot. If the data is loaded then it's the length of the list.
+            position: _currPageValue,
+            decorator: DotsDecorator(
+              activeColor: AppColors.mainColor,
+              size: const Size.square(9.0),
+              activeSize: const Size(18.0, 9.0),
+              activeShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
+            ),
+          );
+        }),
 
         //Popular Header
         SizedBox(height: Dimensions.height30),
@@ -176,7 +183,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
     );
   }
 
-  Widget _buildPageItem(int index) {
+  Widget _buildPageItem(int index, popularProductList) {
     Matrix4 matrix = new Matrix4.identity();
     if (index == _currPageValue.floor()) {
       //floor() kullandık, yani yuvarlama yapacak ve 0 veya 1 olup olmadığını kontrol edecek.
