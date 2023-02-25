@@ -4,12 +4,14 @@ import 'package:food_delivery/utils/colors.dart';
 import 'package:get/get.dart';
 
 import '../models/products_model.dart';
+import 'cart_controller.dart';
 
 class PopularProductController extends GetxController{
   final PopularProductRepo popularProductRepo;
   PopularProductController({required this.popularProductRepo});
   List<dynamic> _popularProductList=[];
   List<dynamic> get popularProductList => _popularProductList;
+  late CartController _cart;
 
   bool _isLoaded = false;
   bool get isLoaded=>_isLoaded;
@@ -63,9 +65,21 @@ class PopularProductController extends GetxController{
     }
   }
 
-  void initQuantity(){
+  void initQuantity(CartController cart){
     _quantity = 0;
     _inCartItems = 0;
+    _cart = cart;
+  }
+
+  void addItem(ProductModel product){
+    if(quantity>0){
+      _cart.addItem(product, _quantity);
+    }else{
+      Get.snackbar("Item Count", "You should at least add 1 item in the cart!",
+          backgroundColor: AppColors.mainColor,
+          colorText: Colors.white);
+    }
+
   }
 
 }

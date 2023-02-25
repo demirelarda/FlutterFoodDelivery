@@ -10,7 +10,12 @@ class CartController extends GetxController{
   Map<int, CartModel> _items={};
 
   void addItem(ProductModel product, int quantity){
-    _items.putIfAbsent(product.id!, () => CartModel(
+    _items.putIfAbsent(product.id!, (){
+      print("adding product id = "+product.id.toString()+" name = "+product.name.toString()+" quantity= "+quantity.toString());
+      _items.forEach((key, value) {
+        print("quantity is "+value.quantity.toString());
+      });
+      return CartModel(
       id:product.id,
       name:product.name,
       price:product.price,
@@ -18,7 +23,9 @@ class CartController extends GetxController{
       quantity:quantity, //bu fonksiyonda(addItem) parametre olarak aldığımız değişken quantity'i buraya veriyoruz.
       isExist:true,
       time:DateTime.now().toString(),
-    ));
+    );}
+
+    );
   }
 
 
