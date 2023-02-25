@@ -66,7 +66,6 @@ class PopularProductController extends GetxController{
   void initQuantity(){
     _quantity = 0;
     _inCartItems = 0;
-
   }
 
 }
