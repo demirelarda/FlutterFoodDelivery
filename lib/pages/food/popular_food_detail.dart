@@ -160,16 +160,19 @@ class PopularFoodDetail extends StatelessWidget {
                   ],
                 ),
               ),//count
-              Container(
-                padding: EdgeInsets.only(top:Dimensions.height20,bottom: Dimensions.height20,left: Dimensions.width20,right: Dimensions.width20),
-                child: GestureDetector(
-                    onTap: (){
-                      popularProduct.addItem(product);
-                    },
-                    child: BigText(text: "\$${product.price} | Add to cart",color: Colors.white,)),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.radius20),
-                    color: AppColors.mainColor
+
+              GestureDetector(
+                onTap: (){
+                  popularProduct.addItem(product);
+                },
+                child: Container(
+                  padding: EdgeInsets.only(top:Dimensions.height20,bottom: Dimensions.height20,left: Dimensions.width20,right: Dimensions.width20),
+
+                      child: BigText(text: "\$${product.price*popularProduct.inCartItems} | Add to cart",color: Colors.white,),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(Dimensions.radius20),
+                      color: AppColors.mainColor
+                  ),
                 ),
               )//button
             ],
