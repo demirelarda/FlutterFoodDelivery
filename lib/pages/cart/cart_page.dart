@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/controllers/cart_controller.dart';
+import 'package:food_delivery/pages/home/main_food_page.dart';
 import 'package:food_delivery/utils/app_constants.dart';
 import 'package:food_delivery/utils/dimensions.dart';
 import 'package:food_delivery/widgets/app_icon.dart';
@@ -31,11 +32,16 @@ class CartPage extends StatelessWidget {
                     iconSize: Dimensions.iconSize24,
                   ),
                   SizedBox(width: Dimensions.width20 * 5),
-                  AppIcon(
-                    icon: Icons.home_outlined,
-                    iconColor: Colors.white,
-                    backgroundColor: AppColors.mainColor,
-                    iconSize: Dimensions.iconSize24,
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(()=>MainFoodPage());
+                    },
+                    child: AppIcon(
+                      icon: Icons.home_outlined,
+                      iconColor: Colors.white,
+                      backgroundColor: AppColors.mainColor,
+                      iconSize: Dimensions.iconSize24,
+                    ),
                   ),
                   AppIcon(
                     icon: Icons.shopping_cart,
@@ -89,7 +95,7 @@ class CartPage extends StatelessWidget {
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          BigText(text:cartController.getItems[index].price!.toString(),color: Colors.redAccent),
+                                          BigText(text:"\$"+cartController.getItems[index].price!.toString(),color: Colors.redAccent),
                                           Container(
                                             padding: EdgeInsets.only(top:Dimensions.height10,bottom:Dimensions.height10,left: Dimensions.width10,right: Dimensions.width10),
                                             decoration: BoxDecoration(
