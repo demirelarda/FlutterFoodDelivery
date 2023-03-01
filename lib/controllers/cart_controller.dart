@@ -86,4 +86,11 @@ class CartController extends GetxController{
     return totalQuantity;
   }
 
+  List<CartModel> get getItems{ //map'i liste olarak return ediyoruz.
+    return _items.entries.map((e){
+     return e.value;
+    }).toList();
+  }
+
+
 }
