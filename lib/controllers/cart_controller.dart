@@ -26,6 +26,7 @@ class CartController extends GetxController{
           quantity:value.quantity!+quantity, //hali hazırda varolan quantity sayısını al ve üstüne sonradan eklenen miktarı ekle.
           isExist:true,
           time:DateTime.now().toString(),
+          product: product,
         );
       });
 
@@ -44,6 +45,7 @@ class CartController extends GetxController{
             quantity:quantity, //bu fonksiyonda(addItem) parametre olarak aldığımız değişken quantity'i buraya veriyoruz.
             isExist:true,
             time:DateTime.now().toString(),
+            product: product,
           );}
 
         );
@@ -53,8 +55,8 @@ class CartController extends GetxController{
             backgroundColor: AppColors.mainColor,
             colorText: Colors.white);
       }
-
     }
+    update(); //update ile nerede add item çağırılsa çağırılsın her zaman UI güncellenecek. Mesela cart sayfasında ürün arttırıp azaltırken quantityler anında değişecek.
   }
 
   bool existInCart(ProductModel product){

@@ -64,7 +64,8 @@ class CartPage extends StatelessWidget {
                       context: context,
                       removeTop: true,
                       child: GetBuilder<CartController>(builder: (cartController){
-                        return ListView.builder(itemCount: cartController.getItems.length, itemBuilder: (_, index) {
+                        var _cartList = cartController.getItems;
+                        return ListView.builder(itemCount: _cartList.length, itemBuilder: (_, index) {
                           return Container(
                             width: double.maxFinite, //take all the available space(width)
                             height:Dimensions.height20*5,
@@ -107,16 +108,16 @@ class CartPage extends StatelessWidget {
                                               children: [
                                                 GestureDetector(
                                                     onTap: (){
-                                                      //popularProduct.setQuantity(false);
+                                                      cartController.addItem(_cartList[index].product!, -1); //eklediğimiz product modeli burada cart controller içindeki addItem fonksiyonuna ulaşırken parametre olarak kullandık.
                                                     },
                                                     child: Icon(Icons.remove, color: AppColors.signColor)),
                                                 SizedBox(width: Dimensions.width10/2),
-                                                BigText(text:"0"),//popularProduct.inCartItems.toString()),
+                                                BigText(text:_cartList[index].quantity.toString()),//popularProduct.inCartItems.toString()),
                                                 SizedBox(height: Dimensions.height20),
                                                 SizedBox(width: Dimensions.width10/2),
                                                 GestureDetector(
                                                     onTap: (){
-                                                      //popularProduct.setQuantity(true);
+                                                      cartController.addItem(_cartList[index].product!, 1); //eklediğimiz product modeli burada cart controller içindeki addItem fonksiyonuna ulaşırken parametre olarak kullandık.
                                                     },
                                                     child: Icon(Icons.add, color: AppColors.signColor,))
                                               ],
